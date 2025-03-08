@@ -10,7 +10,6 @@ import {
   getQuestionByCategorySlug
 } from '../questions.db.js';
 
-// Mock the Prisma client
 vi.mock('@prisma/client', () => {
   const mockQuestions = [
     { id: 1, question: 'Test Question 1', answer: 'Test Answer 1', slug: 'test-question-1', categoryId: 1 },
@@ -79,8 +78,8 @@ describe('Question validation', () => {
   
   it('should reject an invalid question for creation', () => {
     const invalidQuestion = {
-      question: 'Hi', // Too short
-      answer: 'Yo', // Too short
+      question: 'Hi',
+      answer: 'Yo', 
       categoryId: 1,
     };
     

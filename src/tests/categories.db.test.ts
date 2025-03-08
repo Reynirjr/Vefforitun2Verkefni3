@@ -9,7 +9,6 @@ import {
   deleteCategory
 } from '../categories.db.js';
 
-// Mock the Prisma client
 vi.mock('@prisma/client', () => {
   const mockCategories = [
     { id: 1, title: 'HTML', slug: 'html' },
@@ -68,7 +67,7 @@ describe('Category validation', () => {
   
   it('should reject an invalid category for creation', () => {
     const invalidCategory = {
-      title: 'Ts', // Too short
+      title: 'Ts', 
     };
     
     const result = validateCategoryForCreate(invalidCategory);
