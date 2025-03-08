@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { PrismaClient } from '@prisma/client';
+import xss from 'xss';
 
 const prisma = new PrismaClient();
 
@@ -87,7 +88,9 @@ export function validateCategory(categoryToValidate: unknown) {
 }
 
 export async function createCategory(categoryToCreate: CategoryToCreate): Promise<Category> {
-  const slug = categoryToCreate.title
+  const safeTitle = xss(categoryToCreate.title);
+
+  const slug = safeTitle
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^\w-]+/g, '');
@@ -110,6 +113,12 @@ export async function updateCategory(slug: string, changes: CategoryToUpdate): P
     return null;
   }
 
+  let safeTitle = existing.title;
+  if(changes.title) {
+    safeTitle = xss(changes.title);
+  }
+
+
   let newSlug = existing.slug;
   if (changes.title) {
     newSlug = changes.title
@@ -121,7 +130,7 @@ export async function updateCategory(slug: string, changes: CategoryToUpdate): P
   const updated = await prisma.categories.update({
     where: { slug },
     data: {
-      title: changes.title ?? existing.title,
+      title: safeTitle,
       slug: newSlug,
     },
   });
