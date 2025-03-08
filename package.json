@@ -5,7 +5,7 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "x": "npx prisma generate",
-    "start": "node ./dist/index.js",
+    "start": "node ./dist/src/index.js",
     "test": "cross-env NODE_ENV=test vitest run"
   },
   "dependencies": {
