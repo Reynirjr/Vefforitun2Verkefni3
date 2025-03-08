@@ -4,7 +4,7 @@ import xss from 'xss';
 
 const prisma = new PrismaClient();
 
-const CategorySchema = z.object({
+export const CategorySchema = z.object({
   id: z.number(),
   title: z
     .string()

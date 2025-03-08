@@ -63,7 +63,8 @@ app.post('/categories', async (c) => {
   let categoryToCreate: unknown;
   try {
     categoryToCreate = await c.req.json();
-  } catch (e) {
+  } catch (error) {
+    console.error(error);
     return c.json({ error: 'invalid json' }, 400)
   }
 
@@ -77,6 +78,7 @@ app.post('/categories', async (c) => {
     const created = await createCategory(validCategory.data)
     return c.json(created, 201)
   }catch(e){
+    console.error(e)
     return c.json({error: 'Internal error'}, 500);
   }
 });
@@ -88,6 +90,7 @@ app.patch('/categories/:slug', async (c) => {
   try {
     categoryToUpdate = await c.req.json();
   } catch (e) {
+    console.error(e)
     return c.json({ error: 'invalid json' }, 400)
   }
 
@@ -155,7 +158,8 @@ app.post('/questions', async (c) => {
   let body: unknown
   try {
     body = await c.req.json()
-  } catch (err) {
+  } catch (e) {
+    console.error(e)
     return c.json({ error: 'Invalid JSON' }, 400)
   }
 
@@ -182,7 +186,8 @@ app.patch('/questions/:id', async (c) => {
   let body: unknown
   try {
     body = await c.req.json()
-  } catch (err) {
+  } catch (e) {
+    console.error(e)
     return c.json({ error: 'Invalid JSON' }, 400)
   }
 

@@ -4,7 +4,7 @@ import xss from 'xss';
 
 const prisma = new PrismaClient();
 
-const QuestionSchema = z.object({
+export const QuestionSchema = z.object({
     id: z.number(),
     question: z.string().min(3).max(1024),
     answer: z.string().min(3).max(1024),
