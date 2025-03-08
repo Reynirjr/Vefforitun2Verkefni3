@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Hono } from 'hono';
+import { app } from '../index.js';
 
 // Import mocked version of the database modules
 vi.mock('../categories.db.js', () => {
@@ -96,15 +96,14 @@ vi.mock('../questions.db.js', () => {
   };
 });
 
-// Import the app but without starting the server
-let app: Hono;
+// Set the environment to 'test' to prevent server from starting
+process.env.NODE_ENV = 'test';
 
 describe('API Routes', () => {
-  beforeEach(async () => {
+  // No need for dynamic import since we're not starting the server anymore
+  // beforeEach is still useful for resetting mocks between tests
+  beforeEach(() => {
     vi.resetModules();
-    // Dynamic import to reload the app with mocked dependencies
-    const module = await import('../index.js');
-    app = (module as any).app; 
   });
 
   describe('GET /', () => {
